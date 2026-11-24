@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Marcar página activa
-  const actual = location.pathname.split('/').pop() || 'index.html';
+  // (Cloudflare quita el .html de la dirección: /proyectos.html -> /proyectos)
+  const limpiar = r => (r.split('/').pop() || 'index').replace(/\.html$/, '');
+  const actual = limpiar(location.pathname);
   document.querySelectorAll('.menu a').forEach(a => {
-    if (a.getAttribute('href') === actual) a.classList.add('activo');
+    if (limpiar(a.getAttribute('href')) === actual) a.classList.add('activo');
   });
 
   // Botón subir
